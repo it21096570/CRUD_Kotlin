@@ -33,7 +33,7 @@ class DBHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
                 "${UserProfile.Users.COLUMN1} TEXT," +
                 "${UserProfile.Users.COLUMN2} TEXT," +
                 "${UserProfile.Users.COLUMN3} TEXT," +
-                "${UserProfile.Users.COLUMN4} TEXT, +)"
+                "${UserProfile.Users.COLUMN4} TEXT)"
 
 
                 private val SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS ${UserProfile.Users.TABLE_NAME}"
