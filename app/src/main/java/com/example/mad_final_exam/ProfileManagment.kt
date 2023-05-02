@@ -26,11 +26,10 @@ class ProfileManagment : AppCompatActivity() {
 
         btnAddPM.setOnClickListener {
 
-            if (findViewById<RadioButton>(R.id.rbMalePM).isChecked){
-                gender = "Male"
-            }
-            else{
-                gender = "Female"
+            gender = if (findViewById<RadioButton>(R.id.rbMalePM).isChecked){
+                "Male"
+            } else{
+                "Female"
             }
 
 
@@ -38,7 +37,7 @@ class ProfileManagment : AppCompatActivity() {
             val success = dbHandler.addInfo(
                 findViewById<EditText>(R.id.etUsernamePM).text.toString(),
                 findViewById<EditText>(R.id.etDateofbirthPM).text.toString(),
-                findViewById<EditText>(R.id.etUsernamePM).text.toString(),
+                findViewById<EditText>(R.id.etPasswordPM).text.toString(),
                 gender
                 )
             Toast.makeText(this, "Data Added Successfully! - UserID : $success", Toast.LENGTH_LONG).show()
