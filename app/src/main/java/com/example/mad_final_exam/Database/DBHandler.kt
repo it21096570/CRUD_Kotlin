@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns
+import android.text.Selection
 
 
 class DBHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
@@ -90,6 +91,102 @@ class DBHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
         // Issue SQL statement.
         val deletedRows = db.delete(UserProfile.Users.TABLE_NAME, selection, selectionArgs)
 
+    }
+
+    fun readAllInfo():List<String>{
+
+        val username = "test";
+
+        val db = readableDatabase
+
+// Define a projection that specifies which columns from the database
+// you will actually use after this query.
+        val projection = arrayOf(
+
+            BaseColumns._ID,
+            UserProfile.Users.COLUMN1,
+            UserProfile.Users.COLUMN2,
+            UserProfile.Users.COLUMN3,
+            UserProfile.Users.COLUMN4
+        )
+
+// Filter results WHERE "title" = 'My Title'
+        val selection = "${UserProfile.Users.COLUMN1} = ?"
+        val selectionArgs = arrayOf(username)
+
+// How you want the results sorted in the resulting Cursor
+        val sortOrder = "${UserProfile.Users.COLUMN1} ASC"
+
+        val cursor = db.query(
+            UserProfile.Users.TABLE_NAME,   // The table to query
+            projection,             // The array of columns to return (pass null to get all)
+            null,              // The columns for the WHERE clause
+            null,          // The values for the WHERE clause
+            null,                   // don't group the rows
+            null,                   // don't filter by row groups
+            sortOrder               // The sort order
+        )
+
+        val usernames = mutableListOf<String>()
+        with(cursor) {
+            while (moveToNext()) {
+                val user = getString(getColumnIndexOrThrow(UserProfile.Users.COLUMN1))
+                usernames.add(user)
+            }
+        }
+        cursor.close()
+        return usernames
+    }
+
+    fun readAllInfo(username: String):List<String>{
+
+        val db = readableDatabase
+
+// Define a projection that specifies which columns from the database
+// you will actually use after this query.
+        val projection = arrayOf(
+
+            BaseColumns._ID,
+            UserProfile.Users.COLUMN1,
+            UserProfile.Users.COLUMN2,
+            UserProfile.Users.COLUMN3,
+            UserProfile.Users.COLUMN4
+        )
+
+// Filter results WHERE "title" = 'My Title'
+        val selection = "${UserProfile.Users.COLUMN1} = LIKE ?"
+        val selectionArgs = arrayOf(username)
+
+// How you want the results sorted in the resulting Cursor
+        val sortOrder = "${UserProfile.Users.COLUMN1} ASC"
+
+        val cursor = db.query(
+            UserProfile.Users.TABLE_NAME,   // The table to query
+            projection,             // The array of columns to return (pass null to get all)
+            selection,              // The columns for the WHERE clause
+            selectionArgs,          // The values for the WHERE clause
+            null,                   // don't group the rows
+            null,                   // don't filter by row groups
+            sortOrder               // The sort order
+        )
+
+        val userInfo = mutableListOf<String>()
+        with(cursor) {
+            while (moveToNext()) {
+                val user = getString(getColumnIndexOrThrow(UserProfile.Users.COLUMN1))
+                val dob = getString(getColumnIndexOrThrow(UserProfile.Users.COLUMN2))
+                val pass = getString(getColumnIndexOrThrow(UserProfile.Users.COLUMN3))
+                val gender = getString(getColumnIndexOrThrow(UserProfile.Users.COLUMN4))
+
+                userInfo.add(user)//0
+                userInfo.add(dob)//1
+                userInfo.add(pass)//2
+                userInfo.add(gender)//3
+
+            }
+        }
+        cursor.close()
+        return userInfo
     }
 
 }
