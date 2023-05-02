@@ -1,5 +1,6 @@
 package com.example.mad_final_exam.Database
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
@@ -35,4 +36,60 @@ class DBHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
 
 
                 private val SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS ${UserProfile.Users.TABLE_NAME}"
+
+    fun addInfo(username: String, dob: String, password: String, gender: String) {
+        // Gets the data repository in write mode
+        val db = writableDatabase
+
+        // Create a new map of values, where column names are the keys
+        val values = ContentValues().apply {
+            put(UserProfile.Users.COLUMN1, username)
+            put(UserProfile.Users.COLUMN2, dob)
+            put(UserProfile.Users.COLUMN3, password)
+            put(UserProfile.Users.COLUMN4, gender)
+
+        }
+
+        // Insert the new row, returning the primary key value of the new row
+        val newRowId = db?.insert(UserProfile.Users.TABLE_NAME, null, values)
+    }
+
+    fun updateInfo(username: String, dob: String, password: String, gender: String): Boolean{
+
+        val db = writableDatabase
+
+// New value for one column
+        val title = "MyNewTitle"
+        val values = ContentValues().apply {
+            put(UserProfile.Users.COLUMN2, dob)
+            put(UserProfile.Users.COLUMN3, password)
+            put(UserProfile.Users.COLUMN4, gender)
+        }
+
+// Which row to update, based on the title
+        val selection = "${UserProfile.Users.COLUMN1} LIKE ?"
+        val selectionArgs = arrayOf(username)
+        val count = db.update(
+            UserProfile.Users.TABLE_NAME,
+            values,
+            selection,
+            selectionArgs)
+
+        return count > 0
+    }
+
+    fun deleteInfo(username: String,){
+
+        val db = writableDatabase
+
+
+        // Define 'where' part of query.
+        val selection = "${UserProfile.Users.COLUMN1} LIKE ?"
+        // Specify arguments in placeholder order.
+        val selectionArgs = arrayOf(username)
+        // Issue SQL statement.
+        val deletedRows = db.delete(UserProfile.Users.TABLE_NAME, selection, selectionArgs)
+
+    }
+
 }
