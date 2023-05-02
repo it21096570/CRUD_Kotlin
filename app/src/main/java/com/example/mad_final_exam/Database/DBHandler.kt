@@ -33,7 +33,7 @@ class DBHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
                 "${UserProfile.Users.COLUMN1} TEXT," +
                 "${UserProfile.Users.COLUMN2} TEXT," +
                 "${UserProfile.Users.COLUMN3} TEXT," +
-                "${UserProfile.Users.COLUMN4} TEXT, +)"
+                "${UserProfile.Users.COLUMN4} TEXT)"
 
 
                 private val SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS ${UserProfile.Users.TABLE_NAME}"
@@ -154,7 +154,7 @@ class DBHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
         )
 
 // Filter results WHERE "title" = 'My Title'
-        val selection = "${UserProfile.Users.COLUMN1} = LIKE ?"
+        val selection = "${UserProfile.Users.COLUMN1} = ?" // ("= LIKE ?" - video eke like eka danwa)
         val selectionArgs = arrayOf(username)
 
 // How you want the results sorted in the resulting Cursor
@@ -165,9 +165,9 @@ class DBHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
             projection,             // The array of columns to return (pass null to get all)
             selection,              // The columns for the WHERE clause
             selectionArgs,          // The values for the WHERE clause
-            null,                   // don't group the rows
-            null,                   // don't filter by row groups
-            sortOrder               // The sort order
+            null,           // don't group the rows
+            null,            // don't filter by row groups
+            sortOrder              // The sort order
         )
 
         val userInfo = mutableListOf<String>()
