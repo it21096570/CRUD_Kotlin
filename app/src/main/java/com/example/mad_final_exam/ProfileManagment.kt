@@ -3,6 +3,7 @@ package com.example.mad_final_exam
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.BaseColumns
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
@@ -40,7 +41,7 @@ class ProfileManagment : AppCompatActivity() {
                 findViewById<EditText>(R.id.etPasswordPM).text.toString(),
                 gender
                 )
-            Toast.makeText(this, "Data Added Successfully! - UserID : $success", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Data Added Successfully!", Toast.LENGTH_LONG).show()
             startActivity(Intent(this,EditProfile::class.java))
 
 

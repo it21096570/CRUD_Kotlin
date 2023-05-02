@@ -11,8 +11,18 @@ import android.widget.Toast
 import com.example.mad_final_exam.Database.DBHandler
 
 class EditProfile : AppCompatActivity() {
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        //var username = findViewById<EditText>(R.id.etUsernameEP)
+        //var dob = findViewById<EditText>(R.id.etDtaeofBirthEP)
+        //var password = findViewById<EditText>(R.id.etPasswordEP)
+        //var male = findViewById<RadioButton>(R.id.rbMaleEP)
+        //var female = findViewById<RadioButton>(R.id.rbFemaleEP)
+
+        var gender : String
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
 
@@ -44,6 +54,52 @@ class EditProfile : AppCompatActivity() {
                 }
 
             }
+
+        }
+
+        val btnEditEP : Button = findViewById(R.id.btnEditEP)
+
+        btnEditEP.setOnClickListener {
+
+            gender = if (findViewById<RadioButton>(R.id.rbMaleEP).isChecked){
+                "Male"
+            } else{
+                "Female"
+            }
+
+            val dbHandler = DBHandler(applicationContext)
+
+            var status : Boolean = dbHandler.updateInfo(
+                findViewById<EditText>(R.id.etUsernameEP).text.toString(),
+                findViewById<EditText>(R.id.etDtaeofBirthEP).text.toString(),
+                findViewById<EditText>(R.id.etPasswordEP).text.toString(),
+                gender
+            )
+            if (status){
+                Toast.makeText(this, "User Updated!", Toast.LENGTH_LONG).show()
+
+            }
+            else{
+                Toast.makeText(this, "User Not Updated!", Toast.LENGTH_LONG).show()
+
+            }
+
+        }
+
+        val btnDeleteEP : Button = findViewById(R.id.btnDeleteEP)
+
+        btnDeleteEP.setOnClickListener{
+            val dbHandler = DBHandler(applicationContext)
+            dbHandler.deleteInfo(findViewById<EditText>(R.id.etUsernameEP).text.toString())
+
+            Toast.makeText(this, "User Deleted!", Toast.LENGTH_LONG).show()
+
+            findViewById<EditText>(R.id.etUsernameEP).text = null
+            findViewById<EditText>(R.id.etDtaeofBirthEP).text = null
+            findViewById<EditText>(R.id.etPasswordEP).text = null
+            findViewById<EditText>(R.id.etUsernameEP).text = null
+            findViewById<RadioButton>(R.id.rbMaleEP).isChecked = false
+            findViewById<RadioButton>(R.id.rbFemaleEP).isChecked = false
 
         }
     }
