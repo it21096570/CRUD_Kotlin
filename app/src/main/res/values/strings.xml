@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MAD_Final_Exam</string>
+    <string name="app_name">MAD</string>
     <string name="home">Home</string>
     <string name="username">User Name</string>
     <string name="password">Password</string>
@@ -15,4 +15,6 @@
     <string name="search">Search</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="userlist">User List</string>
+    <string name="listview">List View</string>
 </resources>

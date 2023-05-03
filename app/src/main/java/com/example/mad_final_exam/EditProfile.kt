@@ -15,6 +15,11 @@ class EditProfile : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
 
+        var value = intent.getStringExtra("user")
+
+        val user1 = value!!.toString()
+
+
         //var username = findViewById<EditText>(R.id.etUsernameEP)
         //var dob = findViewById<EditText>(R.id.etDtaeofBirthEP)
         //var password = findViewById<EditText>(R.id.etPasswordEP)
@@ -26,16 +31,16 @@ class EditProfile : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
 
-        val btnSearchEP : Button = findViewById(R.id.btnSearchEP)
 
-        btnSearchEP.setOnClickListener {
 
             val dbHandler = DBHandler(applicationContext)
-            var user : List<String> = dbHandler.readAllInfo(findViewById<EditText>(R.id.etUsernameEP).text.toString())
+            var user : List<String> = dbHandler.readAllInfo(user1.toString())
 
             if (user.isEmpty()){
                 Toast.makeText(this, "No User", Toast.LENGTH_LONG).show()
                 findViewById<EditText>(R.id.etUsernameEP).text = null
+                var intent = Intent(this, UserList::class.java)
+                startActivity(intent)
 
             }
             else{
@@ -55,7 +60,7 @@ class EditProfile : AppCompatActivity() {
 
             }
 
-        }
+
 
         val btnEditEP : Button = findViewById(R.id.btnEditEP)
 

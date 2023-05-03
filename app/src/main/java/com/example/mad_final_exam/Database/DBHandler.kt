@@ -138,7 +138,7 @@ class DBHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
         return usernames
     }
 
-    fun readAllInfo(username: String):List<String>{
+    fun readAllInfo(username: String):ArrayList<String>{
 
         val db = readableDatabase
 
@@ -170,7 +170,7 @@ class DBHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, nul
             sortOrder              // The sort order
         )
 
-        val userInfo = mutableListOf<String>()
+        val userInfo = ArrayList<String>()
         with(cursor) {
             while (moveToNext()) {
                 val user = getString(getColumnIndexOrThrow(UserProfile.Users.COLUMN1))
